@@ -5,19 +5,23 @@
 Complex::Complex(double real, double imaginary) : real(real), imaginary(imaginary) {}
 
 double Complex::getReal() const { return real; }
-void Complex::setReal(double real) { this->real = real; }
+void Complex::setReal(const double value) { real = value; }
 
 double Complex::getImaginary() const { return imaginary; }
-void Complex::setImaginary(double imaginary) { this->imaginary = imaginary; }
+void Complex::setImaginary(const double value) { imaginary = value; }
 
-Complex::Complex operator+(const Complex& other) const
+Complex::Complex operator+(const Complex& other)
 {
-    return Complex(real + other.real, imaginary + other.imaginary);
+    double newReal = real + other.real;
+    double newImaginary = imaginary + other.imaginary;
+    return Complex(newReal, newImaginary);
 }
 
-Complex::Complex operator-(const Complex& other) const
+Complex::Complex operator-(const Complex& other)
 {
-    return Complex(real - other.real, imaginary - other.imaginary);
+    double newReal = real - other.real;
+    double newImaginary = imaginary - other.imaginary;
+    return ComplexNumber(newReal, newImaginary);
 }
 
 Complex::Complex operator*(const Complex& other) const
@@ -30,8 +34,13 @@ Complex::Complex operator*(const Complex& other) const
 Complex::Complex operator/(const Complex& other) const
 {
     double denominator = other.real * other.real + other.imaginary * other.imaginary;
+    double eps = 1e-5;
+    if (std::fabs(denominator) < eps)
+    {
+        throw std::overflow_error("Divide by zero exception");
+    }
     double newReal = (real * other.real + imaginary * other.imaginary) / denominator;
-    double newImaginary = (imaginary * other.real - real * other.imaginary) / denominator;
+    double newImaginary = (other.real * imaginary - real * other.imaginary) / denominator;
     return Complex(newReal, newImaginary);
 }
 
@@ -40,19 +49,10 @@ bool Complex::operator==(const Complex& other) const
     return (real == other.real) && (imaginary == other.imaginary);
 }
 
-bool Complex::operator!=(const Complex& other) const
+bool Complex::operator==(const double& other) const
 {
-    return !(*this == other);
-}
-
-bool Complex::operator==(const double& number) const
-{
-    return (real == number) && (imaginary == 0);
-}
-
-bool Complex::operator!=(const double& number) const
-{
-    return !(*this == number);
+    double eps = 1e-5;
+    return (real = other && std::fabs(imaginary) < eps);
 }
 
 double Complex::modulus() const
@@ -71,16 +71,15 @@ Complex::Complex power(int exponent) const
     return Complex(newReal, newImaginary);
 }
 
-friend std::ostream& operator<<(std::ostream& os, const Complex& complex)
+std::ostream& operator<<(std::ostream& out, const Complex& complex)
 {
-    os << complex.real;
-    if (complex.imaginary >= 0)
+    if (complex.imaginary < 0)
     {
-        os << " + " << complex.imaginary << "i";
+        out << complex.real << complex.imaginary << "i\n";
     }
     else
     {
-        os << " - " << -complex.imaginary << "i";
+        out << complex.real << "+" << complex.imaginary << "i\n";
     }
-    return os;
+    return out;
 }
