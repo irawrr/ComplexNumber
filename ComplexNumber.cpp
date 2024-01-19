@@ -24,14 +24,14 @@ Complex::Complex operator-(const Complex& other)
     return ComplexNumber(newReal, newImaginary);
 }
 
-Complex::Complex operator*(const Complex& other) const
+Complex::Complex operator*(const Complex& other)
 {
     double newReal = real * other.real - imaginary * other.imaginary;
     double newImaginary = real * other.imaginary + imaginary * other.real;
     return Complex(newReal, newImaginary);
 }
 
-Complex::Complex operator/(const Complex& other) const
+Complex::Complex operator/(const Complex& other)
 {
     double denominator = other.real * other.real + other.imaginary * other.imaginary;
     double eps = 1e-5;
@@ -44,12 +44,12 @@ Complex::Complex operator/(const Complex& other) const
     return Complex(newReal, newImaginary);
 }
 
-bool Complex::operator==(const Complex& other) const
+bool Complex::operator==(const Complex& other)
 {
     return (real == other.real) && (imaginary == other.imaginary);
 }
 
-bool Complex::operator==(const double& other) const
+bool Complex::operator==(const double& other)
 {
     double eps = 1e-5;
     return (real = other && std::fabs(imaginary) < eps);

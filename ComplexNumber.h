@@ -1,5 +1,5 @@
-#ifndef COMPLEX_H
-#define COMPLEX_H
+#pragma once
+#include <iostream>
 
 class Complex
 {
@@ -8,21 +8,20 @@ private:
     double imaginary;
 
 public:
+    friend std::ostream& operator <<(std::ostream&, const Complex&);
     Complex(double real, double imaginary);
     double getReal() const;
-    void setReal(double real);
+    void setReal(const double value);
     double getImaginary() const;
-    void setImaginary(double imaginary);
-    Complex operator+(const Complex& other) const;
-    Complex operator-(const Complex& other) const;
-    Complex operator*(const Complex& other) const;
-    Complex operator/(const Complex& other) const;
-    bool operator==(const Complex& other) const;
-    bool operator!=(const Complex& other) const;
-    bool operator==(const double& number) const;
-    bool operator!=(const double& number) const;
+    void setImaginary(const double value);
+    Complex operator+(const Complex& other);
+    Complex operator-(const Complex& other);
+    Complex operator*(const Complex& other);
+    Complex operator/(const Complex& other);
+    bool operator==(const Complex& other);
+    bool operator==(const double& other);
     double modulus() const;
     Complex power(int exponent) const;
 };
 
-#endif  // COMPLEX_H
+std::ostream& operator << (std::ostream& out, const Complex& num);
