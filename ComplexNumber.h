@@ -1,27 +1,38 @@
 #pragma once
 #include <iostream>
 
+template <typename T>
 class Complex
 {
 private:
-    double real;
-    double imaginary;
+    T real;
+    T imaginary;
 
 public:
-    friend std::ostream& operator <<(std::ostream&, const Complex&);
-    Complex(double real, double imaginary);
-    double getReal() const;
-    void setReal(const double value);
-    double getImaginary() const;
-    void setImaginary(const double value);
-    Complex operator+(const Complex& other);
-    Complex operator-(const Complex& other);
-    Complex operator*(const Complex& other);
-    Complex operator/(const Complex& other);
-    bool operator==(const Complex& other);
-    bool operator==(const double& other);
-    double modulus() const;
-    Complex power(int exponent) const;
+    Complex(T real, T imaginary);
+
+    T getReal() const;
+    void setReal(T value);
+    T getImaginary() const;
+    void setImaginary(T value);
+
+    Complex<T> operator+(const Complex<T>& other) const;
+    Complex<T> operator-(const Complex<T>& other) const;
+    Complex<T> operator*(const Complex<T>& other) const;
+    Complex<T> operator/(const Complex<T>& other) const;
+
+    bool operator==(const Complex<T>& other) const;
+    bool operator==(T value) const;
+
+    T modulus() const;
+    Complex<T> power(int exponent) const;
+
+    friend std::ostream& operator<<(std::ostream& out, const Complex<T>& num);
+
+    template <typename U>
+    explicit operator U() const;
 };
 
-std::ostream& operator << (std::ostream& out, const Complex& num);
+using ComplexDouble = Complex<double>;
+using ComplexFloat = Complex<float>;
+using ComplexInt = Complex<int>;
