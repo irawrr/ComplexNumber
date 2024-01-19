@@ -84,26 +84,3 @@ friend std::ostream& operator<<(std::ostream& os, const Complex& complex)
     }
     return os;
 }
-
-int main()
-{
-    Complex c1(3, 4);
-    Complex c2(1, -2);
-
-    Complex sum = c1 + c2;
-    Complex difference = c1 - c2;
-    Complex product = c1 * c2;
-    Complex quotient = c1 / c2;
-
-    std::cout << "Sum: " << sum << std::endl;
-    std::cout << "Difference: " << difference << std::endl;
-    std::cout << "Product: " << product << std::endl;
-    std::cout << "Quotient: " << quotient << std::endl;
-
-    std::cout << "Modulus of c1: " << c1.modulus() << std::endl;
-    std::cout << "c1 to the power of 3: " << c1.power(3) << std::endl;
-    std::cout << "c1 is equal to c2: " << (c1 == c2) << std::endl;
-    std::cout << "c1 is equal to 3: " << (c1 == 3) << std::endl;
-
-    return 0;
-}
